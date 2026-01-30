@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Calendar {
+  id        Int          @id @default(autoincrement())
+  name      String
+  type      CalendarType
+  createdAt DateTime     @default(now())
+  holidays  Holiday[]
+}
+
+model Holiday {
+  id         Int         @id @default(autoincrement())
+  calendarId Int
+  calendar   Calendar    @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+  date       DateTime
+  name       String
+  type       HolidayType
+  
+  @@index([calendarId])
+  @@index([date])
+}
+
+enum CalendarType {
+  GLOBAL
+  CUSTOM
+}
+
+enum HolidayType {
+  HOLIDAY
+  CLOSURE
+}
