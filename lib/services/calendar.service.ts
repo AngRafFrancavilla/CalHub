@@ -13,7 +13,7 @@ export const getCalendarPeriod = async (
     throw new Error("Invalid dateFrom or dateTo")
   }
 
-  // 1️⃣ Prendi tutti i festivi globali
+  // Prende tutti i festivi globali
   const globalHolidays = await prisma.holiday.findMany({
     where: {
       calendar: {
@@ -22,24 +22,24 @@ export const getCalendarPeriod = async (
     },
   })
 
-  // 2️⃣ Prendi tutti i festivi custom per il calendario scelto
+  //Prende tutti i festivi custom per il calendario scelto
   const customHolidays = await prisma.holiday.findMany({
     where: {
       calendarId,
     },
   })
 
-  // 3️⃣ Combina i due array
+  // Combina i due array
   const allHolidaysCombined = [...globalHolidays, ...customHolidays]
 
-  // 4️⃣ Creiamo un oggetto { "YYYY-MM-DD": { name, type } } per i tooltip
+  //  "YYYY-MM-DD" per i tooltip
   const allHolidaysObj: Record<string, { name: string; type: string }> = {}
   allHolidaysCombined.forEach(h => {
     const sqlDay = h.date.toISOString().slice(0, 10)
     allHolidaysObj[sqlDay] = { name: h.name, type: h.type }
   })
 
-  // 5️⃣ Genera lista di giorni
+  // genera lista
   const days = []
   let current = new Date(start)
   let index = 0
@@ -53,7 +53,7 @@ export const getCalendarPeriod = async (
     const weekDay = current.toLocaleDateString("en-US", { weekday: "long" })
     const weekNr = getWeekNumber(current)
 
-    const weekDayNumber = current.getDay() // 0 = domenica
+    const weekDayNumber = current.getDay() 
     const isSunday = weekDayNumber === 0
 
     days.push({
@@ -65,7 +65,6 @@ export const getCalendarPeriod = async (
       weekDay,
       weekNr,
       isHoliday: isSunday || sqlDay in allHolidaysObj,
-      holidayName: allHolidaysObj[sqlDay]?.name, // nome della festa se presente
     })
 
     current.setDate(current.getDate() + 1)
@@ -75,9 +74,6 @@ export const getCalendarPeriod = async (
   return days
 }
 
-/**
- * Funzione helper: calcola numero settimana ISO
- */
 function getWeekNumber(d: Date) {
   const date = new Date(d.getTime())
   date.setHours(0, 0, 0, 0)

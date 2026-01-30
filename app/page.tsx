@@ -60,7 +60,7 @@ export default function HomePage() {
             className="group"
           >
             <div className="relative border rounded-xl p-6 bg-white shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 cursor-pointer">
-              {/* Icona calendario */}
+              
               <div className="absolute top-4 right-4 text-gray-300 text-3xl group-hover:text-blue-400 transition">
                 📅
               </div>

@@ -16,14 +16,13 @@ interface CalendarGridProps {
 export default function CalendarGrid({ calendarId }: CalendarGridProps) {
   const today = new Date().toISOString().slice(0, 10)
 
-  // Stato per mese/anno
   const now = new Date()
   const [currentYear, setCurrentYear] = useState(now.getFullYear())
-  const [currentMonth, setCurrentMonth] = useState(now.getMonth()) // 0 = gennaio
+  const [currentMonth, setCurrentMonth] = useState(now.getMonth()) 
   const [days, setDays] = useState<Day[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Funzione fetch dal server per il mese selezionato
+  
   const fetchDays = async (year: number, month: number) => {
     setLoading(true)
     try {
@@ -75,7 +74,7 @@ export default function CalendarGrid({ calendarId }: CalendarGridProps) {
 
   if (loading) return <div>Loading...</div>
 
-  // Lunedi = prima colonna
+ 
   const jsDay = new Date(days[0]?.sqlDay).getDay()
   const firstDay = jsDay === 0 ? 6 : jsDay - 1
   const placeholders = Array.from({ length: firstDay }, (_, i) => (

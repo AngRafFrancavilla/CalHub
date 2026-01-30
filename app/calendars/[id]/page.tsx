@@ -7,7 +7,6 @@ type Calendar = {
   type: "GLOBAL" | "CUSTOM"
 }
 
-/* API CALLS */
 async function getCalendar(id: string): Promise<Calendar> {
   const res = await fetch(`http://localhost:3000/api/calendars/${id}`, {
     cache: "no-store",
@@ -17,7 +16,6 @@ async function getCalendar(id: string): Promise<Calendar> {
   return res.json()
 }
 
-/* PAGE COMPONENT */
 export default async function CalendarPage({
   params,
 }: {

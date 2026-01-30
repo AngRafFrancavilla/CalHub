@@ -5,6 +5,6 @@ interface AddHolidayPageProps {
 }
 
 export default async function AddHolidayPage({ params }: AddHolidayPageProps) {
-  const { id } = await params // ✅ await per sbloccare il Promise
+  const { id } = await params
   return <AddHolidayForm calendarId={id} />
 }

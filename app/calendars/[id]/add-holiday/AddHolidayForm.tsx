@@ -27,7 +27,7 @@ export default function AddHolidayForm({ calendarId }: AddHolidayFormProps) {
         body: JSON.stringify({
           calendarId: Number(calendarId),
           name,
-          type,  // HOLIDAY o CLOSURE
+          type,  
           date,
         }),
       })
